@@ -13,8 +13,8 @@ GAS_PRICE=0uregen
 
 CHAIN_BINARY='regen'
 CHAIN_ID=regen-temp
-GENESIS_URL=https://github.com/cosmos/testnets/raw/master/interchain-security/provider/provider-genesis.json
-PERSISTENT_PEERS="08ec17e86dac67b9da70deb20177655495a55407@provider-seed-01.ics-testnet.polypore.xyz:26656,4ea6e56300a2f37b90e58de5ee27d1c9065cf871@provider-seed-02.ics-testnet.polypore.xyz:26656"
+GENESIS_URL=https://raw.githubusercontent.com/vitwit/regen-temp-testnet/refs/heads/main/genesis.json
+PERSISTENT_PEERS="4b4524bf20524da17e17da08f5466c24e1dbc619@155.138.209.88:26656"
 
 # Install wget and jq
 sudo apt-get install curl jq wget -y
@@ -94,7 +94,7 @@ sudo systemctl enable $SERVICE_NAME.service
 sudo systemctl start $SERVICE_NAME.service
 sudo systemctl restart systemd-journald
 
-# Add go and gaiad to the path
+# Add go and regen to the path
 echo "Setting up paths for go and cosmovisor current bin..."
 echo "export PATH=$PATH:/usr/local/go/bin:$NODE_HOME/cosmovisor/current/bin" >> .profile
 
