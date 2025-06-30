@@ -45,3 +45,74 @@ regen tx staking create-validator --amount 4900000000uregen \
 --fees 1000uregen \
 --from <val-name> 
 ```
+
+### Upgrade to v6.0.0
+
+#### Option 1: Using Cosmovisor
+
+The following instructions assume the `cosmovisor` binary is already installed and cosmovisor is set up as a systemd service. If this is not the case, please refer to [Using Cosmovisor](https://docs.cosmos.network/main/build/tooling/cosmovisor) for instructions on how to install and set up `cosmovisor`.
+
+Build the upgrade binary `v6.0.0` from source:
+
+```
+git clone https://github.com/regen-network/regen-ledger
+cd regen-ledger
+git checkout v6.0.0
+make build
+```
+
+Ensure the `regen` binary has been built:
+```
+./build/regen version
+```
+You should see the following:
+
+`v6.0.0`
+
+
+Create a `v6.0` directory and copy the upgrade binary (v6.0.0) to the directory:
+
+```
+mkdir -p $HOME/.regen/cosmovisor/upgrades/v6.0/bin
+cp ~/regen-ledger/build/regen $HOME/.regen/cosmovisor/upgrades/v6.0/bin
+```
+
+Ensure the right `regen` binary has been placed in the directory:
+```
+$HOME/.regen/cosmovisor/upgrades/v6.0/bin/regen version
+```
+
+
+You should see the following:
+
+`v6.0.0`
+
+At the proposed block height (`TBD`), cosmovisor will automatically stop the current binary ``(v5.1.4)``, set the upgrade binary as the current binary ``(v6.0.0)``, and then (depending on the cosmovisor settings) perform a backup and restart the node.
+
+### Option 2: Without Cosmovisor
+
+Using `cosmovisor` to perform the upgrade is not necessary. Node operators also have the option to manually update the `regen` binary at the time of the upgrade.
+
+When the chain halts at the proposed upgrade height, stop the current process running regen.
+
+**Warning**:- Please execute these steps only after the upgrade height is reached on the network. Building and restarting the process before the upgrade height might cause data corruption in the node database.  
+
+Build the upgrade binary ``(v6.0.0)`` from source:
+
+```
+git clone https://github.com/regen-network/regen-ledger
+cd regen-ledger
+git checkout v6.0.0
+make install
+```
+
+
+Ensure the regen binary has been updated:
+
+`regen version`
+
+You should see the following:
+
+`v6.0.0`
+
+Restart the process running `regen`.
